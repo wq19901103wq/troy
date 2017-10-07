@@ -33,30 +33,31 @@ class Serializer {
     size_t size = t.size();
     Serialize(size);
     // 依次序列化容器内部对象
-    for (const auto& inner : t) {
-      Serialize(inner);
-    }
+    for (const auto& inner : t) {Serialize(inner);}
   }
 
-  // 多值处理，递归情形
+  // 变长调用, 递归情形
   template<typename T, typename ...U>
   inline void Serialize(const T& t, const U&... u) {
     Serialize(t);
     Serialize(u...);
   }
 
+  // trivial standard-layout 但是内部可以有容器, string, 指针等
   template <class T>
   typename std::enable_if<!is_serialize_type<T>(), void>::type
       Serialize(const T& t) {
 // 类成员个数限制, 过大会影响编译速度
 #define PARAM_LIMIT 64
 
-// 类成员变量为N个的情形
+/*
+  类成员变量为N个的情形
+  聚合类型判断不能过滤小于参数个数的情况，故而从大到小遍历
+  structured binding 不支持变长，用preprocessor展开来做
+*/
 #define IF_STRUCT_PARAMS_EQUAL_SERIALIZE(n)                                \
-    /* 聚合类型判断不能过滤小于参数个数的情况，故而从大到小遍历 */         \
-    if constexpr (HasParam<std::decay_t<T>,                                           \
+    if constexpr (HasParam<std::decay_t<T>,                                \
         BOOST_PP_SUB(PARAM_LIMIT, n)>()) {                                 \
-      /* structured binding 不支持变长，用preprocessor展开来做*/           \
       auto&& [BOOST_PP_ENUM_PARAMS(BOOST_PP_SUB(PARAM_LIMIT, n), p)] = t;  \
       Serialize(BOOST_PP_ENUM_PARAMS(BOOST_PP_SUB(PARAM_LIMIT, n), p));    \
     } else                                                                 \

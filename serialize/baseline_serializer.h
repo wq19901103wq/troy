@@ -8,6 +8,7 @@ class BaselineSerializer : public Serializer {
  public:
   BaselineSerializer() = delete;
   BaselineSerializer(std::ostream& os): Serializer(os) {}
+  // virtual 不支持模板, 需要全部列出
   virtual void Serialize(char s) override {
     os_.write(reinterpret_cast<const char*>(&s), sizeof(s));
   }

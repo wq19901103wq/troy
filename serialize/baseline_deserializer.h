@@ -8,6 +8,7 @@ class BaselineDeserializer : public Deserializer {
  public:
   BaselineDeserializer() = delete;
   BaselineDeserializer(std::istream& is): Deserializer(is) {}
+  // virtual 不支持模板, 需要全部列出
   virtual bool Deserialize(char& s) override {
     is_.read(reinterpret_cast<char*>(&s), sizeof(s));
     return is_.good();

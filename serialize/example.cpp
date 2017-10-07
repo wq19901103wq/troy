@@ -57,16 +57,16 @@ int main(int argc, char **argv) {
   std::string str = SerializeToString(a);
   if (auto opb =  ParseFromString<A>(str)) {
     auto& b = *opb;
-    std::cout << b.b << std::endl; // should be 0.2f;
-    std::cout << b.c << std::endl; // should be "base";
-    std::cout << b.d.b << std::endl; // should be 0.7;
-    std::cout << b.e.size() << std::endl; // should be 3;
-    std::cout << b.e[0] << std::endl; // should be 2;
-    std::cout << b.e[1] << std::endl; // should be 3;
-    std::cout << b.e[2] << std::endl; // should be 2;
-    std::cout << b.f.size() << std::endl; // should be 2;
-    std::cout << b.f["wangqian"].a << std::endl; // should be 2;
-    std::cout << b.f["joying"].b << std::endl; // should be 0.5;
+    std::cout << b.b << std::endl;                // should be 0.2f;
+    std::cout << b.c << std::endl;                // should be "base";
+    std::cout << b.d.b << std::endl;              // should be 0.7;
+    std::cout << b.e.size() << std::endl;         // should be 3;
+    std::cout << b.e[0] << std::endl;             // should be 2;
+    std::cout << b.e[1] << std::endl;             // should be 3;
+    std::cout << b.e[2] << std::endl;             // should be 2;
+    std::cout << b.f.size() << std::endl;         // should be 2;
+    std::cout << b.f["wangqian"].a << std::endl;  // should be 2;
+    std::cout << b.f["joying"].b << std::endl;    // should be 0.5;
   } else {
     std::cout << "Not Parsed Correctly." << std::endl;
   }
@@ -76,9 +76,9 @@ int main(int argc, char **argv) {
   using IsomorphismC = std::tuple<int, std::string, double>;
   str = SerializeToString(tmp);
   if (auto opc =  ParseFromString<IsomorphismC>(str)) {
-    std::cout << std::get<0>(*opc) << std::endl; // should be 1;
-    std::cout << std::get<1>(*opc) << std::endl; // should be "das";
-    std::cout << std::get<2>(*opc) << std::endl; // should be 0.2f;
+    std::cout << std::get<0>(*opc) << std::endl;  // should be 1;
+    std::cout << std::get<1>(*opc) << std::endl;  // should be "das";
+    std::cout << std::get<2>(*opc) << std::endl;  // should be 0.2f;
   } else {
     std::cout << "Not Parsed Correctly." << std::endl;
   }

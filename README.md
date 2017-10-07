@@ -112,33 +112,10 @@ bazel test ...
 
 # Example
 ```
-// Serialize To String
-template <typename T>
-std::string SerializeToString(const T& t) {
-  std::stringstream os;
-  std::shared_ptr<Serializer> serializer(new BaselineSerializer(os));
-  serializer->Serialize(t);
-  return os.str();
-}
-// Parse From String
-template <typename T>
-std::optional<T> ParseFromString(const std::string& str) {
-  std::stringstream os;
-  os << str;
-  std::shared_ptr<Deserializer> deserializer(new BaselineDeserializer(os));
-  T ret;
-  if (deserializer->Deserialize(ret)) {
-    return ret;
-  } else {
-    return {};
-  }
-}
-// 
 struct SomeStruct {
   int a;
   float b;
 };
-//
 struct AnotherStruct {
   int a;
   double b;
@@ -152,7 +129,7 @@ if (auto opb = ParseFromString<AnotherStruct>(str)) {
   // *opb is actualy equal to another_struct
 }
 ```
-
+* See more example [example.cpp](serialize/example.cpp) 
 * If you want to realize you serialize alothgrim, please refer [baseline_serializer](serialize/baseline_serializer.h) and [baseline_deserializer](serialize/baseline_deserializer.h)
 
 # Difference between other serialization

@@ -85,11 +85,6 @@ aptitude search boost
 
 find packages you need and install them using the apt-get command.
 
-* for centos
-
-```
- yum install gcc-7
-```
 
 * for installation package
 
@@ -141,6 +136,20 @@ if (auto opb = ParseFromString<AnotherStruct>(str)) {
 | boost serialization     | no                 | yes                  | no | low
 | C#.NET framework        | only windows       | no                   | yes | low
 
+
+# TODO
+
+## version control
+
+* 版本控制，前向兼容
+
+## protobuf / boost::archive alogthiom release
+
+* protobuf 和 boost::archive 算法在troy上的实现
+
+## verification interface
+
+* 提供校验接口， 防止文件被污染或粗度
 
 # C++17 Language Features Used in Troy
 

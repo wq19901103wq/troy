@@ -2,7 +2,7 @@
 
 ## gcc-7.1
 
-###for ubuntu 14.04
+* for ubuntu 14.04
 
 ```
 sudo add-apt-repository ppa:jonathonf/gcc-7.1
@@ -10,20 +10,19 @@ sudo add-apt-repository ppa:jonathonf/gcc-7.1
 ```
 sudo apt-get install gcc-7
 ```
-
-###for centos
+* for centos
 
 ```
  yum install gcc-7
 ```
 
-###for installation package
+* for installation package
 
 [install gcc](https://gcc.gnu.org/) 
 
 ## bazel 
 
-### Install JDK 8
+* Install JDK 8
 
 * Install JDK 8 by using:
 
@@ -40,7 +39,7 @@ sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update && sudo apt-get install oracle-java8-installer
 ```
 
-###Add Bazel distribution URI as a package source (one time setup)
+* Add Bazel distribution URI as a package source (one time setup)
 
 ```
 echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
@@ -51,7 +50,7 @@ curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
 
 If you want to install the testing version of Bazel, replace stable with testing.
 
-###Install and update Bazel
+* Install and update Bazel
 
 ```
 sudo apt-get update && sudo apt-get install bazel
@@ -63,14 +62,14 @@ sudo apt-get update && sudo apt-get install bazel
 sudo apt-get upgrade bazel
 ```
 
-### More Documents about bazel
+*  More Documents about bazel
 
 * [bazel](https://docs.bazel.build/versions/master/install-ubuntu.html)
 
 
 ## boost 
 
-###for ubuntu 14.04
+* for ubuntu 14.04
 
 Run command
 
@@ -86,13 +85,13 @@ aptitude search boost
 
 find packages you need and install them using the apt-get command.
 
-###for centos
+* for centos
 
 ```
  yum install gcc-7
 ```
 
-###for installation package
+* for installation package
 
 [install boost](http://www.boost.org/users/download/) 
 
@@ -113,6 +112,7 @@ bazel test ...
 
 # Example
 ```
+// Serialize To String
 template <typename T>
 std::string SerializeToString(const T& t) {
   std::stringstream os;
@@ -120,6 +120,7 @@ std::string SerializeToString(const T& t) {
   serializer->Serialize(t);
   return os.str();
 }
+// Parse From String
 template <typename T>
 std::optional<T> ParseFromString(const std::string& str) {
   std::stringstream os;
@@ -132,15 +133,23 @@ std::optional<T> ParseFromString(const std::string& str) {
     return {};
   }
 }
-SomeStruct {
+// 
+struct SomeStruct {
   int a;
-  std::unordered_map<std::string, uint32_t> b;
-  double c;
+  float b;
+};
+//
+struct AnotherStruct {
+  int a;
+  double b;
+  std::vector<SomeStruct> c;
+  std::unordered_map<std::string, uint32_t> d;
   // ....
-} some_struct;
-std::string str = SerializeToString(some_struct);
-if (auto opb = ParseFromString<SomeStruct>(str)) {
-  // *opb is actualy equal to some_struct
+} another_struct;
+// ... set another_struct
+std::string str = SerializeToString(another_struct);
+if (auto opb = ParseFromString<AnotherStruct>(str)) {
+  // *opb is actualy equal to another_struct
 }
 ```
 
@@ -148,12 +157,12 @@ if (auto opb = ParseFromString<SomeStruct>(str)) {
 
 # Difference between other serialization
 
-| Method                  |  cross-language    | modify code needed   | container supprot    |
-|-------------------------|--------------------|----------------------|----------------------|
-| Troy                    | by your alothgrim  | no                   | yes
-| Protobuf/Thrift         | yes                | need to write proto  | only vector and map (for proto3) 
-| boost serialization     | no                 | yes                  | yes 
-| C#.NET framework        | no                 | no                   | yes 
+| Method                  |  cross-language    | modify code needed   | container supprot    | memory
+|-------------------------|--------------------|----------------------|----------------------|------------|
+| Troy                    | by your alothgrim  | no                   | yes | low
+| Protobuf/Thrift         | yes                | need to write proto  | only vector and map (for proto3) | high
+| boost serialization     | no                 | yes                  | no | low
+| C#.NET framework        | only windows       | no                   | yes | low
 
 
 # C++17 Language Features Used in Troy

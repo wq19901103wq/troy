@@ -1,3 +1,35 @@
+# Code Example
+```c++
+struct SomeStruct {
+  int a;
+  float b;
+};
+struct AnotherStruct {
+  int a;
+  double b;
+  std::vector<SomeStruct> c;
+  std::unordered_map<std::string, uint32_t> d;
+  // ....
+} another_struct;
+// ... set another_struct
+std::string str = SerializeToString(another_struct);
+if (auto opb = ParseFromString<AnotherStruct>(str)) {
+  // *opb is actualy equal to another_struct
+}
+```
+* See more example [example.cpp](serialize/example.cpp) 
+* If you want to realize you serialize alothgrim, please refer [baseline_serializer](serialize/baseline_serializer.h) and [baseline_deserializer](serialize/baseline_deserializer.h)
+
+# Difference between other serialization
+
+| Method                  |  cross-language    | modify code needed   | container supprot    | memory
+|-------------------------|--------------------|----------------------|----------------------|------------|
+| Troy                    | by your alothgrim  | no                   | yes | low
+| Protobuf/Thrift         | yes                | need to write proto  | only vector and map (for proto3) | high
+| boost serialization     | no                 | yes                  | no | low
+| C#.NET framework        | only windows       | no                   | yes | low
+
+
 # How To Install
 
 ## gcc-7.1
@@ -105,52 +137,6 @@ bazel build ...
 bazel test ...
 ```
 
-# Example
-```c++
-struct SomeStruct {
-  int a;
-  float b;
-};
-struct AnotherStruct {
-  int a;
-  double b;
-  std::vector<SomeStruct> c;
-  std::unordered_map<std::string, uint32_t> d;
-  // ....
-} another_struct;
-// ... set another_struct
-std::string str = SerializeToString(another_struct);
-if (auto opb = ParseFromString<AnotherStruct>(str)) {
-  // *opb is actualy equal to another_struct
-}
-```
-* See more example [example.cpp](serialize/example.cpp) 
-* If you want to realize you serialize alothgrim, please refer [baseline_serializer](serialize/baseline_serializer.h) and [baseline_deserializer](serialize/baseline_deserializer.h)
-
-# Difference between other serialization
-
-| Method                  |  cross-language    | modify code needed   | container supprot    | memory
-|-------------------------|--------------------|----------------------|----------------------|------------|
-| Troy                    | by your alothgrim  | no                   | yes | low
-| Protobuf/Thrift         | yes                | need to write proto  | only vector and map (for proto3) | high
-| boost serialization     | no                 | yes                  | no | low
-| C#.NET framework        | only windows       | no                   | yes | low
-
-
-# TODO
-
-## version control
-
-* 版本控制，前向兼容
-
-## protobuf / boost::archive alogthiom release
-
-* protobuf 和 boost::archive 算法在troy上的实现
-
-## verification interface
-
-* 提供校验接口， 防止文件被污染或错读
-
 # C++17 Language Features Used in Troy
 
 ### Template argument deduction for class templates
@@ -244,3 +230,17 @@ Qian Wang(cenrwang@tencent.com)
 
 # License
 Apache-2.0 license.
+
+# TODO
+
+## version control
+
+* 版本控制，前向兼容
+
+## protobuf / boost::archive alogthiom release
+
+* protobuf 和 boost::archive 算法在troy上的实现
+
+## verification interface
+
+* 提供校验接口， 防止文件被污染或错读

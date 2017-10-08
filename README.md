@@ -137,6 +137,9 @@ bazel build ...
 bazel test ...
 ```
 
+# Structure of Troy
+![structure](document/troy_structure.png)
+
 # C++17 Language Features Used in Troy
 
 ### Template argument deduction for class templates
